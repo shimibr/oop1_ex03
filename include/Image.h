@@ -9,4 +9,3 @@ public:
 private:
 	ImageDataStructure m_image;
 };
-gh
