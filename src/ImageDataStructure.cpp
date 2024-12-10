@@ -1,4 +1,6 @@
 #include "ImageDataStructure.h"
+#include <charconv>
+#include <iostream>
 
 ImageDataStructure::ImageDataStructure(const int height, const int width)
 	:m_height(height),m_width(width)
@@ -48,6 +50,33 @@ void ImageDataStructure::set_width(const int width)
 {
 	m_width = width;
 }
+ImageDataStructure ImageDataStructure::operator+(ImageDataStructure& other)
+{
+    ImageDataStructure temp(std::max(this->m_height, other.m_height)
+        , this->m_width + other.m_width);
+
+    for (int i = 0; i < temp.m_height; i++)
+    {
+        for (int j = 0; j < temp.m_width; j++)
+        {
+            if ((i >= this->m_height && j < this->m_width) ||
+                (i >= other.m_height && (j >= this->m_width)))
+                j++;
+
+            else if (j < this->m_width)
+                temp.set_pixel(i, j, this->m_image[i][j]);
+            else if ((j - this->m_width) < other.m_width)
+                temp.set_pixel(i, j, other.m_image[i][j - this->m_width]);
+
+        }
+    }
+    return temp;
+}
+//ImageDataStructure& ImageDataStructure::operator=(const ImageDataStructure& other)
+//{
+//    
+//    return ;
+//}
 //=========================
 Pixel** ImageDataStructure::bild_matrix()
 {
@@ -59,3 +88,15 @@ Pixel** ImageDataStructure::bild_matrix()
 	return temp;
 }
 //=============================
+
+void operator<<(std::ostream& os, const ImageDataStructure& other)
+{
+    for (int i = 0; i < other.m_height; ++i)
+    {
+        for (int j = 0; j < other.m_width; ++j)
+        {
+            std::cout << other.m_image[i][j];
+        }
+        std::cout << '\n';
+    }
+}

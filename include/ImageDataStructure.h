@@ -14,6 +14,9 @@ public:
 	int get_width() const;
 	void set_height(const int height);
 	void set_width(const int width);
+	ImageDataStructure operator+(ImageDataStructure& other);
+	ImageDataStructure& operator=(const ImageDataStructure& other);
+	friend void operator<<(std::ostream& os, const ImageDataStructure& other);
 
 private:
 	Pixel** bild_matrix() ;

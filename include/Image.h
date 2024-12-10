@@ -5,6 +5,7 @@
 class Image
 {
 public:
+	Image(const ImageDataStructure& image);
 	Image(const int height, const int width);
 	Image(const int height, const int width, const Pixel pixel);
 	void fill_matrix(Pixel pixel);

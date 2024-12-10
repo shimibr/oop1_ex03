@@ -2,6 +2,11 @@
 #include <iostream>
 
 
+Image::Image(const ImageDataStructure& image)
+    :m_image(image)
+{
+}
+
 Image::Image(const int height, const int width)
 	:Image(height, width, ' ')
 {}
@@ -52,37 +57,40 @@ bool Image::operator!=(Image& other)
 
 Image Image::operator+(Image& other)
 {
-    Image temp(std::max(this->m_image.get_height(), other.m_image.get_height())
+ /*   Image temp(std::max(this->m_image.get_height(), other.m_image.get_height())
                ,this->m_image.get_width() + other.m_image.get_width());
 
     for (int i = 0; i < temp.m_image.get_height(); i++)
     {
         for (int  j = 0; j < temp.m_image.get_width(); j++)
         {
-            if ((i > this->m_image.get_height() && j <= this->m_image.get_width()) ||
-                (i > other.m_image.get_height() && j <= other.m_image.get_width()))
-                break;
+            if ((i >= this->m_image.get_height() && j < this->m_image.get_width()) ||
+                (i >= other.m_image.get_height() && (j >= this->m_image.get_width() )))
+                j++;
                
-            else if (j <= this->m_image.get_width())
+            else if (j < this->m_image.get_width())
                 temp.m_image.set_pixel(i, j, this->m_image.get_pixel(i, j));
-            else if ((j - 1 - this->m_image.get_width()) <= other.m_image.get_width())
-                temp.m_image.set_pixel(i, j, other.m_image.get_pixel(i, j - 1 - this->m_image.get_width()));
+            else if ((j - this->m_image.get_width()) < other.m_image.get_width())
+                temp.m_image.set_pixel(i, j, other.m_image.get_pixel(i, j - this->m_image.get_width()));
 
         }
-    }
+    }*/
+    Image temp((this->m_image + other.m_image));
+    //temp.m_image = (this->m_image + other.m_image);
+    
+    
     return temp;
 }
 
-void std::ostream& operator<<(std::ostream& os, const Image& other)
+void operator<<(std::ostream& os, const Image& other)
 {
-    for (int i = 0; i < other.m_image.get_height(); ++i)
+   /* for (int i = 0; i < other.m_image.get_height(); ++i)
     {
         for (int j = 0; j < other.m_image.get_width(); ++j)
         {
             std::cout << other.m_image.get_pixel(i,j);
         }
         std::cout << '\n';
-    }
-    return os << other.m_image.get_width();
-
+    }*/
+    std::cout << other.m_image;
 }
