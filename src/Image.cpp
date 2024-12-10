@@ -2,46 +2,39 @@
 #include <iostream>
 
 
-//Image::Image() :m_height(0), m_width(0) { }
-
 Image::Image(const int height, const int width)
-	:m_image(height, width), m_height(height), m_width(width) { }
+	:Image(height, width, ' ')
+{}
 
 Image::Image(const int height, const int width, const Pixel pixel) 
-	:m_image(height, width), m_height(height), m_width(width)
+	:m_image(height, width)
 {
+    m_image.set_height(height);
+    m_image.set_width(width);
 	fill_matrix(pixel);
 }
 
 void Image::fill_matrix(Pixel pixel) {
 
-    for (int i = 0; i < m_height; ++i) {
-        for (int j = 0; j < m_width; ++j) {
+    for (int i = 0; i < m_image.get_height(); ++i) {
+        for (int j = 0; j < m_image.get_width(); ++j) {
             m_image(i, j) = pixel;
         }
     }
 }
-
-void Image::print_matrix()
-{
-    for (int i = 0; i < m_height; ++i) {
-        for (int j = 0; j < m_width; ++j) {
-            std::cout << m_image(i, j);
-        }
-    }
-}
+//============================
 bool Image::operator==(Image& other)
 {
-    if (this->m_height != other.m_height ||
-        this->m_width != other.m_width)
+    if (this->m_image.get_height() != other.m_image.get_height() ||
+        this->m_image.get_width() != other.m_image.get_width())
         return false;
 
 
-    for (int i = 0; i < m_height; ++i)
+    for (int i = 0; i < m_image.get_height(); ++i)
     {
-        for (int j = 0; j < m_width; ++j)
+        for (int j = 0; j < m_image.get_width(); ++j)
         {
-            if (this->m_image(i, j) != other.m_image(i, j))
+            if (this->m_image.get_pixel(i,j) != other.m_image.get_pixel(i,j))
             {
                 return false;
             }
@@ -57,4 +50,39 @@ bool Image::operator!=(Image& other)
     return true;
 }
 
+Image Image::operator+(Image& other)
+{
+    Image temp(std::max(this->m_image.get_height(), other.m_image.get_height())
+               ,this->m_image.get_width() + other.m_image.get_width());
 
+    for (int i = 0; i < temp.m_image.get_height(); i++)
+    {
+        for (int  j = 0; j < temp.m_image.get_width(); j++)
+        {
+            if ((i > this->m_image.get_height() && j <= this->m_image.get_width()) ||
+                (i > other.m_image.get_height() && j <= other.m_image.get_width()))
+                break;
+               
+            else if (j <= this->m_image.get_width())
+                temp.m_image.set_pixel(i, j, this->m_image.get_pixel(i, j));
+            else if ((j - 1 - this->m_image.get_width()) <= other.m_image.get_width())
+                temp.m_image.set_pixel(i, j, other.m_image.get_pixel(i, j - 1 - this->m_image.get_width()));
+
+        }
+    }
+    return temp;
+}
+
+void std::ostream& operator<<(std::ostream& os, const Image& other)
+{
+    for (int i = 0; i < other.m_image.get_height(); ++i)
+    {
+        for (int j = 0; j < other.m_image.get_width(); ++j)
+        {
+            std::cout << other.m_image.get_pixel(i,j);
+        }
+        std::cout << '\n';
+    }
+    return os << other.m_image.get_width();
+
+}
