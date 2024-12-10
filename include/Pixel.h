@@ -12,6 +12,7 @@ public:
 	Pixel operator|=(const Pixel& other);
 	Pixel operator&(const Pixel& other) const;
 	Pixel operator&=(const Pixel& other);
+
 	
 	
 	friend std::ostream& operator<<(std::ostream& os, const Pixel& other);
