@@ -27,8 +27,3 @@ Pixel** ImageDataStructure::bild_matrix()
 	return temp;
 }
 //=============================
-Pixel& ImageDataStructure::operator[](int row, int col) {
-	
-	return m_image[row][col];
-}
-

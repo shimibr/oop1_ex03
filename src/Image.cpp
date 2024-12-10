@@ -14,21 +14,19 @@ Image::Image(const int height, const int width, const Pixel pixel)
 }
 
 void Image::fill_matrix(Pixel pixel) {
-    Pixel** matrix = m_image.get_matrix();
 
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
-            matrix[i][j] = pixel;
+            m_image(i, j) = pixel;
         }
     }
 }
 
 void Image::print_matrix()
 {
-    Pixel** matrix = m_image.get_matrix();
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
-            std::cout << matrix[i][j];
+            std::cout << m_image(i, j);
         }
     }
 }
@@ -43,7 +41,7 @@ bool Image::operator==(Image& other)
     {
         for (int j = 0; j < m_width; ++j)
         {
-            if (this->m_image[i][j] != other.m_image[i][j])
+            if (this->m_image(i, j) != other.m_image(i, j))
             {
                 return false;
             }
@@ -52,9 +50,9 @@ bool Image::operator==(Image& other)
 
     return true;
 }
-bool operator!=(ImageDataStructure& thisImage, ImageDataStructure& otherImage)
+bool Image::operator!=(Image& other)
 {
-    if(thisImage == otherImage)
+    if(*this == other)
     return false;
     return true;
 }

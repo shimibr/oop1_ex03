@@ -12,6 +12,7 @@ public:
 	void print_matrix();
 
 	bool operator==(Image& other);
+	bool operator!=(Image& other);
 
 	//~Image();
 
