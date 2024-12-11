@@ -9,13 +9,12 @@ public:
 	Image(const int height, const int width);
 	Image(const int height, const int width, const Pixel pixel);
 	void fill_matrix(Pixel pixel);
-	friend void operator<<(std::ostream& os, const Image& other);
-
-	Image operator=(Image& other);
+	friend std::ostream& operator<<(std::ostream&, const Image&);
+	Image& operator=(const Image& other);
 	bool operator==(Image& other);
 	bool operator!=(Image& other);
-	Image operator+(Image& other);
-	Image operator+=(Image& other);
+	Image& operator+(const Image& other);
+	Image& operator+=(const Image& other);
 
 	//~Image();
 

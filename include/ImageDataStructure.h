@@ -14,7 +14,7 @@ public:
 	int get_width() const;
 	void set_height(const int height);
 	void set_width(const int width);
-
+	void swap(ImageDataStructure& other);
 private:
 	Pixel** bild_matrix() ;
 

@@ -13,11 +13,11 @@ Image::Image(const Image& image)
         }
     }
 }
-
+//===============================
 Image::Image(const int height, const int width)
 	:Image(height, width, ' ')
 {}
-
+//===============================
 Image::Image(const int height, const int width, const Pixel pixel) 
 	:m_image(height, width)
 {
@@ -25,7 +25,7 @@ Image::Image(const int height, const int width, const Pixel pixel)
     m_image.set_width(width);
 	fill_matrix(pixel);
 }
-
+//===============================
 void Image::fill_matrix(Pixel pixel) {
 
     for (int i = 0; i < m_image.get_height(); ++i) {
@@ -34,11 +34,12 @@ void Image::fill_matrix(Pixel pixel) {
         }
     }
 }
-Image Image::operator=(Image& other)
+//===============================
+Image& Image::operator=(const Image& other)
 {
     Image temp(other);
-    std::swap(temp.m_image, m_image);
-    return *this ;
+    m_image.swap(temp.m_image);
+    return *this;
 }
 //============================
 bool Image::operator==(Image& other)
@@ -61,14 +62,15 @@ bool Image::operator==(Image& other)
 
     return true;
 }
+//===============================
 bool Image::operator!=(Image& other)
 {
     if(*this == other)
     return false;
     return true;
 }
-
-Image Image::operator+(Image& other)
+//===============================
+Image& Image::operator+(const Image& other)
 {
     Image temp(std::max(this->m_image.get_height(), other.m_image.get_height())
                ,this->m_image.get_width() + other.m_image.get_width());
@@ -90,20 +92,22 @@ Image Image::operator+(Image& other)
     }
    return temp;
 }
-
-Image Image::operator+=(Image& other)
+//===============================
+Image& Image::operator+=(const Image& other)
 {
+    *this = *this + other;
     return *this;
 }
-
-void operator<<(std::ostream& os, const Image& other)
+//===============================
+std::ostream& operator<<(std::ostream& os, const Image& other)
 {
-   for (int i = 0; i < other.m_image.get_height(); ++i)
+    for (int i = 0; i < other.m_image.get_height(); ++i)
     {
         for (int j = 0; j < other.m_image.get_width(); ++j)
         {
-            std::cout << other.m_image.get_pixel(i,j);
+            std::cout << other.m_image.get_pixel(i, j);
         }
         std::cout << '\n';
     }
+    return os << '\n';
 }

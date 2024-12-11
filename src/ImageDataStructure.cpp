@@ -50,6 +50,15 @@ void ImageDataStructure::set_width(const int width)
 {
 	m_width = width;
 }
+//======
+void ImageDataStructure::swap(ImageDataStructure& other)
+{
+	std::swap(m_image, other.m_image);
+	std::swap(m_height, other.m_height);
+	std::swap(m_width, other.m_width);
+	
+	
+}
 //=========================
 Pixel** ImageDataStructure::bild_matrix()
 {

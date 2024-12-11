@@ -10,8 +10,8 @@ int main()
 	
 	Image matrix1(2, 2, BLACK);
 	Image matrix2(2, 2, GRAY);
-	std::cout << (matrix1);
-	matrix2 = matrix1;
-	std::cout << (matrix2);
+	matrix2 = (matrix2 + matrix1);
+	std::cout << matrix2;
+
 	return 0;
 }
