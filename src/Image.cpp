@@ -2,9 +2,16 @@
 #include <iostream>
 
 
-Image::Image(const ImageDataStructure& image)
-    :m_image(image)
+Image::Image(const Image& image)
+    :Image(image.m_image.get_height(), image.m_image.get_width())
 {
+    for (int i = 0; i < m_image.get_height(); i++)
+    {
+        for (int j = 0; j < m_image.get_width(); j++)
+        {
+            m_image.set_pixel(i, j, image.m_image.get_pixel(i, j));
+        }
+    }
 }
 
 Image::Image(const int height, const int width)
@@ -29,16 +36,9 @@ void Image::fill_matrix(Pixel pixel) {
 }
 Image Image::operator=(Image& other)
 {
-    Image temp(other.m_image.get_height(), other.m_image.get_width());
-
-    for (int i = 0; i < temp.m_image.get_height() -1; i++)
-    {
-        for (int j = 0; j < temp.m_image.get_width() -1; j++)
-        {
-            temp.m_image.set_pixel(i, j, other.m_image.get_pixel(i, j));
-        }
-    }
-    return temp;
+    Image temp(other);
+    std::swap(temp.m_image, m_image);
+    return *this ;
 }
 //============================
 bool Image::operator==(Image& other)
@@ -93,7 +93,7 @@ Image Image::operator+(Image& other)
 
 Image Image::operator+=(Image& other)
 {
-    return ;
+    return *this;
 }
 
 void operator<<(std::ostream& os, const Image& other)
