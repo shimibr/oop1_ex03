@@ -70,7 +70,7 @@ bool Image::operator!=(Image& other)
     return true;
 }
 //===============================
-Image& Image::operator+(const Image& other)
+Image Image::operator+(const Image& other)
 {
     Image temp(std::max(this->m_image.get_height(), other.m_image.get_height())
                ,this->m_image.get_width() + other.m_image.get_width());

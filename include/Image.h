@@ -13,7 +13,7 @@ public:
 	Image& operator=(const Image& other);
 	bool operator==(Image& other);
 	bool operator!=(Image& other);
-	Image& operator+(const Image& other);
+	Image operator+(const Image& other);
 	Image& operator+=(const Image& other);
 
 	//~Image();
