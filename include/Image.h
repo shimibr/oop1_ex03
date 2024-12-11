@@ -11,10 +11,11 @@ public:
 	void fill_matrix(Pixel pixel);
 	friend void operator<<(std::ostream& os, const Image& other);
 
-
+	Image operator=(Image& other);
 	bool operator==(Image& other);
 	bool operator!=(Image& other);
 	Image operator+(Image& other);
+	Image operator+=(Image& other);
 
 	//~Image();
 

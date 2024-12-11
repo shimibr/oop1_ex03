@@ -27,6 +27,19 @@ void Image::fill_matrix(Pixel pixel) {
         }
     }
 }
+Image Image::operator=(Image& other)
+{
+    Image temp(other.m_image.get_height(), other.m_image.get_width());
+
+    for (int i = 0; i < temp.m_image.get_height() -1; i++)
+    {
+        for (int j = 0; j < temp.m_image.get_width() -1; j++)
+        {
+            temp.m_image.set_pixel(i, j, other.m_image.get_pixel(i, j));
+        }
+    }
+    return temp;
+}
 //============================
 bool Image::operator==(Image& other)
 {
@@ -57,7 +70,7 @@ bool Image::operator!=(Image& other)
 
 Image Image::operator+(Image& other)
 {
- /*   Image temp(std::max(this->m_image.get_height(), other.m_image.get_height())
+    Image temp(std::max(this->m_image.get_height(), other.m_image.get_height())
                ,this->m_image.get_width() + other.m_image.get_width());
 
     for (int i = 0; i < temp.m_image.get_height(); i++)
@@ -74,23 +87,23 @@ Image Image::operator+(Image& other)
                 temp.m_image.set_pixel(i, j, other.m_image.get_pixel(i, j - this->m_image.get_width()));
 
         }
-    }*/
-    Image temp((this->m_image + other.m_image));
-    //temp.m_image = (this->m_image + other.m_image);
-    
-    
-    return temp;
+    }
+   return temp;
+}
+
+Image Image::operator+=(Image& other)
+{
+    return ;
 }
 
 void operator<<(std::ostream& os, const Image& other)
 {
-   /* for (int i = 0; i < other.m_image.get_height(); ++i)
+   for (int i = 0; i < other.m_image.get_height(); ++i)
     {
         for (int j = 0; j < other.m_image.get_width(); ++j)
         {
             std::cout << other.m_image.get_pixel(i,j);
         }
         std::cout << '\n';
-    }*/
-    std::cout << other.m_image;
+    }
 }
