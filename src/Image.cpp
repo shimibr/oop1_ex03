@@ -157,7 +157,7 @@ Image& Image::operator&=(const Image& other)
     return *this;
 }
 //=============================
-Image Image::operator*(unsigned int n)
+Image Image::operator*(unsigned int n)const
 {
     if (n <= 0)
         return Image(0, 0);
@@ -194,11 +194,11 @@ Image Image::operator~()
     }
     return temp;
 }
-//=============================
-//Image Image::operator*(unsigned int n, const Image& other) {
-//    return other * n;
-//}
-
+//==========================================
+Pixel& Image::operator()(const unsigned int i, const unsigned int j)
+{
+    return m_image.get_index(i, j);
+}
 //=============================
 std::ostream& operator<<(std::ostream& os, const Image& other)
 {
@@ -211,4 +211,9 @@ std::ostream& operator<<(std::ostream& os, const Image& other)
         std::cout << '\n';
     }
     return os << '\n';
+}
+
+Image operator*(unsigned int n, const Image& other)
+{
+    return other * n ;
 }

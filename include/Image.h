@@ -19,12 +19,11 @@ public:
 	Image& operator|=(const Image& other);
 	Image operator&(const Image& other);
 	Image& operator&=(const Image& other);
-	Image operator*(unsigned int n);
-//	Image& operator*(const Image& other, unsigned int n);
+	Image operator*(unsigned int n) const;
 	Image& operator*=(unsigned int n);
 	Image operator~();
-
-
+	friend Image operator*(unsigned int n, const Image& other);
+	Pixel& operator()(const unsigned int i, const unsigned int j);
 
 	//~Image();
 

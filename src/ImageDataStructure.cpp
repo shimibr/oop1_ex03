@@ -59,6 +59,10 @@ void ImageDataStructure::swap(ImageDataStructure& other)
 	
 	
 }
+Pixel& ImageDataStructure::get_index(const unsigned int i, const unsigned int j)
+{
+	return m_image[i][j];
+}
 //=========================
 Pixel** ImageDataStructure::bild_matrix()
 {
