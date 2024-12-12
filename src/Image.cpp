@@ -2,6 +2,11 @@
 #include <iostream>
 
 
+Image::Image()
+    :Image(0,0)
+{
+}
+//===========================
 Image::Image(const Image& image)
     :Image(image.m_image.get_height(), image.m_image.get_width())
 {
@@ -34,6 +39,7 @@ void Image::fill_matrix(Pixel pixel) {
         }
     }
 }
+//=================================
 //===============================
 Image& Image::operator=(const Image& other)
 {
@@ -42,7 +48,7 @@ Image& Image::operator=(const Image& other)
     return *this;
 }
 //============================
-bool Image::operator==(Image& other)
+bool Image::operator==(const Image& other) const
 {
     if (this->m_image.get_height() != other.m_image.get_height() ||
         this->m_image.get_width() != other.m_image.get_width())
@@ -63,14 +69,15 @@ bool Image::operator==(Image& other)
     return true;
 }
 //===============================
-bool Image::operator!=(Image& other)
+bool Image::operator!=(const Image& other) const
 {
     if(*this == other)
-    return false;
+        return false;
+
     return true;
 }
 //===============================
-Image Image::operator+(const Image& other)
+Image Image::operator+(const Image& other) const
 {
     Image temp(std::max(this->m_image.get_height(), other.m_image.get_height())
                ,this->m_image.get_width() + other.m_image.get_width());
@@ -99,7 +106,7 @@ Image& Image::operator+=(const Image& other)
     return *this;
 }
 //============================
-Image Image::operator|(const Image& other) 
+Image Image::operator|(const Image& other) const
 {
     Image temp(std::max(m_image.get_height(), other.m_image.get_height()),
                std::max(m_image.get_width(), other.m_image.get_width()));
@@ -135,7 +142,7 @@ Image& Image::operator|=(const Image& other)
     return *this;
 }
 //===============================
-Image Image::operator&(const Image& other) 
+Image Image::operator&(const Image& other) const
 {
     Image temp(std::min(m_image.get_height(), other.m_image.get_height()),
                std::min(m_image.get_width(), other.m_image.get_width()));
@@ -157,7 +164,7 @@ Image& Image::operator&=(const Image& other)
     return *this;
 }
 //=============================
-Image Image::operator*(unsigned int n)const
+Image Image::operator*(const unsigned int n)const
 {
     if (n <= 0)
         return Image(0, 0);
@@ -169,7 +176,7 @@ Image Image::operator*(unsigned int n)const
     return temp;
 }
 //===============================
-Image& Image::operator*=(unsigned int n)
+Image& Image::operator*=(const unsigned int n)
 {
     *this = *this * n;
     return *this;
@@ -197,7 +204,22 @@ Image Image::operator~()
 //==========================================
 Pixel& Image::operator()(const unsigned int i, const unsigned int j)
 {
-    return m_image.get_index(i, j);
+    return m_image(i, j);
+}
+//=========================================
+const Pixel& Image::operator()(const unsigned int i, const unsigned int j) const
+{
+    return m_image(i, j);
+}
+//==============================
+int Image::GetHeight() const
+{
+    return m_image.get_height();
+}
+//===============================
+int Image::GetWidth() const
+{
+    return m_image.get_width();
 }
 //=============================
 std::ostream& operator<<(std::ostream& os, const Image& other)
@@ -213,7 +235,7 @@ std::ostream& operator<<(std::ostream& os, const Image& other)
     return os << '\n';
 }
 
-Image operator*(unsigned int n, const Image& other)
+Image operator*(const unsigned int n, const Image& other)
 {
     return other * n ;
 }

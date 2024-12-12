@@ -7,15 +7,15 @@ class ImageDataStructure
 public:
 	ImageDataStructure(const int height,const int width);
 	~ImageDataStructure();
-	Pixel& operator()(int row, int col) const;
 	Pixel get_pixel(const int row, const int col) const;
 	void set_pixel(const int row, const int col, Pixel pixel);
-	int get_height() const;
-	int get_width() const;
+
+	Pixel& operator()(int row, int col) const;
 	void set_height(const int height);
 	void set_width(const int width);
 	void swap(ImageDataStructure& other);
-	Pixel& get_index(const unsigned int i,const unsigned int j);
+	int get_width() const;
+	int get_height() const;
 private:
 	Pixel** bild_matrix() ;
 

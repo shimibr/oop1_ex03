@@ -3,8 +3,9 @@
 #include <iostream>
 
 ImageDataStructure::ImageDataStructure(const int height, const int width)
-	:m_height(height),m_width(width)
+	:m_height(height),m_width(width),m_image(nullptr)
 { 
+	if(m_height > 0 && m_width > 0)
 	m_image = bild_matrix();
 }
 //==========================
@@ -50,18 +51,13 @@ void ImageDataStructure::set_width(const int width)
 {
 	m_width = width;
 }
-//======
+//====================
 void ImageDataStructure::swap(ImageDataStructure& other)
 {
 	std::swap(m_image, other.m_image);
 	std::swap(m_height, other.m_height);
 	std::swap(m_width, other.m_width);
-	
-	
-}
-Pixel& ImageDataStructure::get_index(const unsigned int i, const unsigned int j)
-{
-	return m_image[i][j];
+		
 }
 //=========================
 Pixel** ImageDataStructure::bild_matrix()
