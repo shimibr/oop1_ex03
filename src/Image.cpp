@@ -98,7 +98,108 @@ Image& Image::operator+=(const Image& other)
     *this = *this + other;
     return *this;
 }
+//============================
+Image Image::operator|(const Image& other) 
+{
+    Image temp(std::max(m_image.get_height(), other.m_image.get_height()),
+               std::max(m_image.get_width(), other.m_image.get_width()));
+
+    for (int i = 0; i < temp.m_image.get_height(); ++i) 
+    {
+        for (int j = 0; j < temp.m_image.get_width(); ++j) 
+        {
+            Pixel pixel;
+
+            if (i < m_image.get_height() && j < m_image.get_width() &&
+                i < other.m_image.get_height() && j < other.m_image.get_width()) 
+            {
+                pixel = m_image.get_pixel(i, j) | other.m_image.get_pixel(i, j);
+            }
+            else if (i < m_image.get_height() && j < m_image.get_width()) 
+            {
+                pixel = m_image.get_pixel(i, j);
+            }
+            else if (i < other.m_image.get_height() && j < other.m_image.get_width()) 
+            {
+                pixel = other.m_image.get_pixel(i, j);
+            }
+            temp.m_image.set_pixel(i, j, pixel);
+        }
+    }
+    return temp;
+}
 //===============================
+Image& Image::operator|=(const Image& other)
+{
+    *this = *this | other;
+    return *this;
+}
+//===============================
+Image Image::operator&(const Image& other) 
+{
+    Image temp(std::min(m_image.get_height(), other.m_image.get_height()),
+               std::min(m_image.get_width(), other.m_image.get_width()));
+
+    for (int i = 0; i < temp.m_image.get_height(); ++i) 
+    {
+        for (int j = 0; j < temp.m_image.get_width(); ++j) 
+        {
+            Pixel pixel = m_image.get_pixel(i, j) & other.m_image.get_pixel(i, j);
+            temp.m_image.set_pixel(i, j, pixel);
+        }
+    }
+    return temp;
+}
+//============================
+Image& Image::operator&=(const Image& other)
+{
+    *this = *this & other;
+    return *this;
+}
+//=============================
+Image Image::operator*(unsigned int n)
+{
+    if (n <= 0)
+        return Image(0, 0);
+
+    Image temp(0, 0);
+    for (int i = 0; i < n; i++)
+        temp += *this;
+
+    return temp;
+}
+//===============================
+Image& Image::operator*=(unsigned int n)
+{
+    *this = *this * n;
+    return *this;
+}
+//============================
+Image Image::operator~()
+{
+    Image temp(m_image.get_height(), m_image.get_width());
+    
+    for (int i = 0; i < temp.m_image.get_height(); ++i)
+    {
+        for (int j = 0; j < temp.m_image.get_width(); ++j)
+        {
+            if(m_image.get_pixel(i,j) == (unsigned char)219)
+                temp.m_image.set_pixel(i, j, ' ');
+
+            else if (m_image.get_pixel(i, j) == ' ')
+                temp.m_image.set_pixel(i, j, (unsigned char)219);
+            else
+            temp.m_image.set_pixel(i, j, (unsigned char)176);
+        }
+    }
+    return temp;
+}
+//=============================
+//Image Image::operator*(unsigned int n, const Image& other) {
+//    return other * n;
+//}
+
+//=============================
 std::ostream& operator<<(std::ostream& os, const Image& other)
 {
     for (int i = 0; i < other.m_image.get_height(); ++i)

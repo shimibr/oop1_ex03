@@ -15,6 +15,16 @@ public:
 	bool operator!=(Image& other);
 	Image operator+(const Image& other);
 	Image& operator+=(const Image& other);
+	Image operator|(const Image& other);
+	Image& operator|=(const Image& other);
+	Image operator&(const Image& other);
+	Image& operator&=(const Image& other);
+	Image operator*(unsigned int n);
+//	Image& operator*(const Image& other, unsigned int n);
+	Image& operator*=(unsigned int n);
+	Image operator~();
+
+
 
 	//~Image();
 
