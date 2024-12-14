@@ -6,7 +6,7 @@ ImageDataStructure::ImageDataStructure(const int height, const int width)
 	:m_height(height),m_width(width),m_image(nullptr)
 { 
 	if(m_height > 0 && m_width > 0)
-	m_image = bild_matrix();
+		m_image = bild_matrix();
 }
 //==========================
 ImageDataStructure::~ImageDataStructure()
@@ -40,16 +40,6 @@ int ImageDataStructure::get_height() const
 int ImageDataStructure::get_width() const
 {
 	return m_width;
-}
-//===========================
-void ImageDataStructure::set_height(const int height)
-{
-	m_height = height;
-}
-//===========================
-void ImageDataStructure::set_width(const int width)
-{
-	m_width = width;
 }
 //====================
 void ImageDataStructure::swap(ImageDataStructure& other)

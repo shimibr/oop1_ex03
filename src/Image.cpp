@@ -14,7 +14,7 @@ Image::Image(const Image& image)
     {
         for (int j = 0; j < m_image.get_width(); j++)
         {
-            m_image.set_pixel(i, j, image.m_image.get_pixel(i, j));
+            m_image(i, j) = image.m_image(i, j);
         }
     }
 }
@@ -26,8 +26,6 @@ Image::Image(const int height, const int width)
 Image::Image(const int height, const int width, const Pixel pixel) 
 	:m_image(height, width)
 {
-    m_image.set_height(height);
-    m_image.set_width(width);
 	fill_matrix(pixel);
 }
 //===============================
@@ -59,7 +57,7 @@ bool Image::operator==(const Image& other) const
     {
         for (int j = 0; j < m_image.get_width(); ++j)
         {
-            if (this->m_image.get_pixel(i,j) != other.m_image.get_pixel(i,j))
+            if (this->m_image(i,j) != other.m_image(i,j))
             {
                 return false;
             }
@@ -91,9 +89,10 @@ Image Image::operator+(const Image& other) const
                 j++;
                
             else if (j < this->m_image.get_width())
-                temp.m_image.set_pixel(i, j, this->m_image.get_pixel(i, j));
+                temp.m_image(i, j) =  this->m_image(i, j);
+
             else if ((j - this->m_image.get_width()) < other.m_image.get_width())
-                temp.m_image.set_pixel(i, j, other.m_image.get_pixel(i, j - this->m_image.get_width()));
+                temp.m_image(i, j) =  other.m_image(i, j - this->m_image.get_width());
 
         }
     }
@@ -115,22 +114,19 @@ Image Image::operator|(const Image& other) const
     {
         for (int j = 0; j < temp.m_image.get_width(); ++j) 
         {
-            Pixel pixel;
 
             if (i < m_image.get_height() && j < m_image.get_width() &&
                 i < other.m_image.get_height() && j < other.m_image.get_width()) 
             {
-                pixel = m_image.get_pixel(i, j) | other.m_image.get_pixel(i, j);
+                temp.m_image(i, j) = m_image(i, j) | other.m_image(i, j);
             }
+         
             else if (i < m_image.get_height() && j < m_image.get_width()) 
-            {
-                pixel = m_image.get_pixel(i, j);
-            }
+                temp.m_image(i, j) = m_image(i, j);
+            
             else if (i < other.m_image.get_height() && j < other.m_image.get_width()) 
-            {
-                pixel = other.m_image.get_pixel(i, j);
-            }
-            temp.m_image.set_pixel(i, j, pixel);
+                temp.m_image(i, j) = other.m_image(i, j);
+          
         }
     }
     return temp;
@@ -151,8 +147,8 @@ Image Image::operator&(const Image& other) const
     {
         for (int j = 0; j < temp.m_image.get_width(); ++j) 
         {
-            Pixel pixel = m_image.get_pixel(i, j) & other.m_image.get_pixel(i, j);
-            temp.m_image.set_pixel(i, j, pixel);
+            temp.m_image(i, j) = m_image(i, j) & other.m_image(i, j);
+            
         }
     }
     return temp;
@@ -190,13 +186,14 @@ Image Image::operator~()
     {
         for (int j = 0; j < temp.m_image.get_width(); ++j)
         {
-            if(m_image.get_pixel(i,j) == (unsigned char)219)
-                temp.m_image.set_pixel(i, j, ' ');
+            if(m_image(i,j) == (unsigned char)219)
+                temp.m_image(i, j) = ' ';
 
-            else if (m_image.get_pixel(i, j) == ' ')
-                temp.m_image.set_pixel(i, j, (unsigned char)219);
+            else if (m_image(i, j) == ' ')
+                temp.m_image(i, j) = (unsigned char)219;
+
             else
-            temp.m_image.set_pixel(i, j, (unsigned char)176);
+            temp.m_image(i, j) = (unsigned char)176;
         }
     }
     return temp;
@@ -228,13 +225,13 @@ std::ostream& operator<<(std::ostream& os, const Image& other)
     {
         for (int j = 0; j < other.m_image.get_width(); ++j)
         {
-            std::cout << other.m_image.get_pixel(i, j);
+            std::cout << other.m_image(i, j);
         }
         std::cout << '\n';
     }
     return os << '\n';
 }
-
+//================================
 Image operator*(const unsigned int n, const Image& other)
 {
     return other * n ;
