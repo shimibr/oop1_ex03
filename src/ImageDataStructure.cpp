@@ -22,16 +22,6 @@ Pixel& ImageDataStructure::operator()(int row, int col) const
 	return m_image[row][col];
 }
 //===========================
-Pixel ImageDataStructure::get_pixel(const int row, const int col) const
-{
-	return m_image[row][col];
-}
-//===========================
-void ImageDataStructure::set_pixel(const int row, const int col, Pixel pixel)
-{
-	m_image[row][col] = pixel;
-}
-//===========================
 int ImageDataStructure::get_height() const
 {
 	return m_height;

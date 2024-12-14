@@ -8,9 +8,6 @@ public:
 	ImageDataStructure(const int height,const int width);
 	~ImageDataStructure();
 
-	Pixel get_pixel(const int row, const int col) const;
-	void set_pixel(const int row, const int col, Pixel pixel);
-
 	Pixel& operator()(int row, int col) const;
 	void swap(ImageDataStructure& other);
 	int get_width() const;

@@ -23,6 +23,7 @@ public:
 	Image operator*(const unsigned int n) const;
 	Image& operator*=(const unsigned int n);
 	friend Image operator*(const unsigned int n, const Image& other);
+	friend Image operator*=(const unsigned int n, Image& other);
 	Image operator~();
 	Pixel& operator()(const unsigned int i, const unsigned int j);
 	const Pixel& operator()(const unsigned int i, const unsigned int j) const;

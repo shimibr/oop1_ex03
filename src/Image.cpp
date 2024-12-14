@@ -84,15 +84,12 @@ Image Image::operator+(const Image& other) const
     {
         for (int  j = 0; j < temp.m_image.get_width(); j++)
         {
-            if ((i >= this->m_image.get_height() && j < this->m_image.get_width()) ||
-                (i >= other.m_image.get_height() && (j >= this->m_image.get_width() )))
-                j++;
-               
-            else if (j < this->m_image.get_width())
-                temp.m_image(i, j) =  this->m_image(i, j);
+            if (j < this->m_image.get_width() && i < this->m_image.get_height())
+                temp.m_image(i, j) = this->m_image(i, j);
 
-            else if ((j - this->m_image.get_width()) < other.m_image.get_width())
-                temp.m_image(i, j) =  other.m_image(i, j - this->m_image.get_width());
+            else if (j >= this->m_image.get_width() && j < other.m_image.get_width() + this->m_image.get_width() &&
+                i < other.m_image.get_height())
+                temp.m_image(i, j) = other.m_image(i, j - this->m_image.get_width());
 
         }
     }
@@ -235,4 +232,10 @@ std::ostream& operator<<(std::ostream& os, const Image& other)
 Image operator*(const unsigned int n, const Image& other)
 {
     return other * n ;
+}
+
+Image operator*=(const unsigned int n, Image& other)
+{
+    other = (other * n);
+    return other;
 }
